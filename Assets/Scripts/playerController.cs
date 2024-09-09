@@ -11,12 +11,7 @@ public class playerController : MonoBehaviour
 
     */
 
-
-
-    //Change skin of character in editor, default 96px/96px
-    //SpriteRenderer spriteRenderer;
-
-    //Change maximum speed at which character can move
+    //Change maximum speed at which character can move, no reason to implement this rn
     //public float maxSpeed = 28;
 
     //Change acceleration of character
@@ -24,25 +19,31 @@ public class playerController : MonoBehaviour
 
     //Change jumping force
     public float jumpForce = 24;
-
+    //player transform, for spawner to trigger
     public Transform player1;
+    //player touching ground layer
     public LayerMask groundLayer;
+    //second player spawn trigger layer
     public LayerMask spawnLayer;
+    //player controlled characters group
+    //!!! antigravity character has different script
     public GameObject player2;
-
+    //player rigidbody2d
     private Rigidbody2D rb2d;
+    //Change skin of character in editor, default 96px/96px
     private SpriteRenderer playerSprite;
     private bool doubleJump;
 
     void Start()
     {
+        //var assignment
         rb2d = GetComponent<Rigidbody2D> ();
         playerSprite = GetComponent<SpriteRenderer> ();
     }
 
     void Update()
     {
-        //Character movement left/right inputs instead of "getKey"
+        //Character movement left/right, inputs instead of "getKey"
         rb2d.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rb2d.velocity.y);
         
         //Character double jumping
@@ -63,9 +64,10 @@ public class playerController : MonoBehaviour
 
         if (Input.GetButtonUp("Jump") && rb2d.velocity.y > 0f)
         {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.5f);
+            rb2d.velocity = new Vector2(rb2d.velocity.x, rb2d.velocity.y * 0.85f);
         }
-        //Character movement speed limiter
+
+        //Character movement speed limiter, no need for this rn
         //rb2d.velocity = Vector3.ClampMagnitude(rb2d.velocity, maxSpeed);
 
         if(secondPlayer())
